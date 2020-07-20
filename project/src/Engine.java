@@ -78,8 +78,6 @@ public class Engine implements Runnable {
                 }
                 //Assign the new generation in the grid.
                 grid = newGrid;
-                printGrid(grid);
-                System.out.println("---------------------");
 
                 //If the cell in new generation is green, we increment the counter.
                 if (isCellGreen(grid, cell)) {
@@ -142,16 +140,6 @@ public class Engine implements Runnable {
         }
     }
 
-    private void printGrid(int[][] grid) {
-        //Prints the grid for testing.
-        for (int[] row : grid) {
-            for (int element : row) {
-                System.out.print(element);
-            }
-            System.out.println();
-        }
-    }
-
     private boolean checkIfCellShouldChangeValue(int[][] grid, Cell cell) {
         /* This method returns if current cell should change the value to the opposite.
             Example:
@@ -168,9 +156,12 @@ public class Engine implements Runnable {
         if (cellColor == 0 && (countOfNeighboursGreenCells == 3 || countOfNeighboursGreenCells == 6)) {
             return true;
         }
+        if (cellColor == 1 && (countOfNeighboursGreenCells != 2 && countOfNeighboursGreenCells != 3 &&
+                countOfNeighboursGreenCells != 6)) {
+            return true;
+        }
         //Returns if the green cell's color should be changed.
-        return cellColor == 1 && (countOfNeighboursGreenCells != 3 &&
-                countOfNeighboursGreenCells != 6 && countOfNeighboursGreenCells != 2);
+        return false;
     }
 
     private int getCountOfNeighboursGreenCells(int[][] grid, Cell cell) {
