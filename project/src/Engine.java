@@ -26,9 +26,7 @@ public class Engine implements Runnable {
             grid = new int[gridHeight][gridWidth];
 
             //Throw exception if entered grid size is invalid
-            if (!checkIfGridSizeIsValid(grid)) {
-                throw new InvalidGridSizeException();
-            }
+            checkIfGridSizeIsValid(grid);
 
             //Fill the grid with the entered values.
             this.fillGrid(grid);
@@ -49,9 +47,7 @@ public class Engine implements Runnable {
             int greenCellCounter = 0;
 
             //Throw exception if entered cell coordinates are invalid.
-            if (!checkIfCellIsInBounds(grid, cell)) {
-                throw new InvalidCellCoordinatesException();
-            }
+            checkIfCellIsInBounds(grid, cell);
 
             //First check if the cell in zero generation is green
             if (isCellGreen(grid, cell)) {
@@ -103,15 +99,23 @@ public class Engine implements Runnable {
         }
     }
 
-    private boolean checkIfGridSizeIsValid(int[][] grid) {
-        //This method returns if grid size is valid.
-        return grid.length > 0 && grid[0].length > 0;
+    private void checkIfGridSizeIsValid(int[][] grid) throws InvalidGridSizeException {
+        //This method throws exception if grid's size is valid.
+        boolean isValid = grid.length > 0 && grid[0].length > 0;
+
+        if (!isValid) {
+            throw new InvalidGridSizeException();
+        }
     }
 
-    private boolean checkIfCellIsInBounds(int[][] grid, Cell cell) {
-        //This method returns if cell is in current grid's bounds.
-        return ((cell.getX() >= 0 && cell.getX() < grid.length) ||
-                (cell.getY() >= 0 && cell.getY() < grid[0].length));
+    private void checkIfCellIsInBounds(int[][] grid, Cell cell) throws InvalidCellCoordinatesException {
+        //This method throws exception if cell is not in the current grid's bounds.
+        boolean isValid = (cell.getX() >= 0 && cell.getX() < grid.length) ||
+                (cell.getY() >= 0 && cell.getY() < grid[0].length);
+
+        if (!isValid) {
+            throw new InvalidCellCoordinatesException();
+        }
     }
 
     private boolean isCellGreen(int[][] grid, Cell cell) {
