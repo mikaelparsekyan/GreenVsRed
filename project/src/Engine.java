@@ -42,7 +42,7 @@ public class Engine implements Runnable {
             //  Assign the cell coordinates in array.
             //  [0] is X coordinate length,
             //  [1] is Y coordinate length
-            Cell cell = new Cell(cellInput[0], cellInput[1]);
+            Cell cell = new Cell(cellInput[1], cellInput[0]);
             int iterations = cellInput[2];
             int greenCellCounter = 0;
 
@@ -78,6 +78,8 @@ public class Engine implements Runnable {
                 }
                 //Assign the new generation in the grid.
                 grid = newGrid;
+                printGrid(grid);
+                System.out.println("---------------------");
 
                 //If the cell in new generation is green, we increment the counter.
                 if (isCellGreen(grid, cell)) {
@@ -123,7 +125,7 @@ public class Engine implements Runnable {
         int cellX = cell.getX();
         int cellY = cell.getY();
 
-        return grid[cellY][cellX] == 1;
+        return grid[cellX][cellY] == 1;
     }
 
     private void fillGrid(int[][] grid) throws IOException {
@@ -140,15 +142,15 @@ public class Engine implements Runnable {
         }
     }
 
-//    private void printGrid(int[][] grid) {
-//        //Prints the grid for testing.
-//        for (int[] row : grid) {
-//            for (int element : row) {
-//                System.out.print(element);
-//            }
-//            System.out.println();
-//        }
-//    }
+    private void printGrid(int[][] grid) {
+        //Prints the grid for testing.
+        for (int[] row : grid) {
+            for (int element : row) {
+                System.out.print(element);
+            }
+            System.out.println();
+        }
+    }
 
     private boolean checkIfCellShouldChangeValue(int[][] grid, Cell cell) {
         /* This method returns if current cell should change the value to the opposite.
