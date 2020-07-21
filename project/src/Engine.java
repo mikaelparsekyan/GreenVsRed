@@ -122,7 +122,7 @@ public class Engine implements Runnable {
 
     private void checkIfCellIsInBounds(int[][] grid, Cell cell) throws InvalidCellCoordinatesException {
         //This method throws exception if cell is not in the current grid's bounds.
-        boolean isValid = (cell.getX() >= 0 && cell.getX() < grid.length) ||
+        boolean isValid = (cell.getX() >= 0 && cell.getX() < grid.length) &&
                 (cell.getY() >= 0 && cell.getY() < grid[0].length);
 
         if (!isValid) {
