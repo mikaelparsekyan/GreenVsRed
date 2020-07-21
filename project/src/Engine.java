@@ -140,12 +140,15 @@ public class Engine implements Runnable {
         return grid[cellX][cellY] == 1;
     }
 
-    private void fillGrid(int[][] grid) throws IOException {
+    private void fillGrid(int[][] grid) throws IOException, InvalidInputArgumentsException {
         //This method fills the grid with the input values.
 
         for (int row = 0; row < grid.length; row++) {
             //Split the grid's row by "" and assign the values in array.
             String[] rowArray = input.readLineAsArray("");
+            if (rowArray.length != grid[0].length) {
+                throw new InvalidInputArgumentsException();
+            }
 
             for (int col = 0; col < rowArray.length; col++) {
                 //Parse the string values to integer.
