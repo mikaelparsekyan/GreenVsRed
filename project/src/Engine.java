@@ -22,7 +22,7 @@ public class Engine implements Runnable {
             String[] gridSizeArray = input.readLineAsArray(", ");
 
             //Throw InvalidInputArgumentsException if input args size is not 2.
-            if(gridSizeArray.length < 2){
+            if (gridSizeArray.length < 2) {
                 throw new InvalidInputArgumentsException();
             }
             int gridWidth = Integer.parseInt(gridSizeArray[0]);
@@ -104,6 +104,8 @@ public class Engine implements Runnable {
         } catch (NumberFormatException e) {
             //Handle NumberFormatException and print number exception message.
             System.err.println("Cannot parse numbers! Enter valid numbers!");
+        } catch (NegativeArraySizeException e) {
+            System.err.println("Grid size must not be negative!");
         } catch (InvalidCellCoordinatesException | InvalidGridSizeException |
                 InvalidInputArgumentsException e) {
             //Print invalid input errors.
