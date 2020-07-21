@@ -1,5 +1,6 @@
 import exceptions.InvalidCellCoordinatesException;
 import exceptions.InvalidGridSizeException;
+import exceptions.InvalidInputArgumentsException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,20 +20,30 @@ public class Engine implements Runnable {
             //Split the input by ", " and parse it to integer.
             //@throws NumberFormatException if we enter invalid number.
             String[] gridSizeArray = input.readLineAsArray(", ");
+
+            //Throw InvalidInputArgumentsException if input args size is not 2.
+            if(gridSizeArray.length < 2){
+                throw new InvalidInputArgumentsException();
+            }
             int gridWidth = Integer.parseInt(gridSizeArray[0]);
             int gridHeight = Integer.parseInt(gridSizeArray[1]);
 
             //Create a new instance of two dimension array, with the entered size.
             grid = new int[gridHeight][gridWidth];
 
-            //Throw exception if entered grid size is invalid
+            //Throw exception if entered grid size is invalid.
             checkIfGridSizeIsValid(grid);
 
             //Fill the grid with the entered values.
             this.fillGrid(grid);
 
+            //Read (x1, y1, N) and split by ", " in array.
             String[] coordinatesInput = input.readLineAsArray(", ");
 
+            //If input args size is not 3 (x1, y1, N) throw new InvalidInputArgumentsException.
+            if (coordinatesInput.length != 3) {
+                throw new InvalidInputArgumentsException();
+            }
             int[] cellInput = new int[3];
             for (int i = 0; i < cellInput.length; i++) {
                 //Parse the last line from the input.
@@ -93,7 +104,8 @@ public class Engine implements Runnable {
         } catch (NumberFormatException e) {
             //Handle NumberFormatException and print number exception message.
             System.err.println("Cannot parse numbers! Enter valid numbers!");
-        } catch (InvalidCellCoordinatesException | InvalidGridSizeException e) {
+        } catch (InvalidCellCoordinatesException | InvalidGridSizeException |
+                InvalidInputArgumentsException e) {
             //Print invalid input errors.
             System.err.println(e.getMessage());
         }
@@ -171,9 +183,11 @@ public class Engine implements Runnable {
         //This method returns the number of green neighbour cells.
         int greenCellCounter = 0;
 
-        //This loop iterates the neighbour cells
+        //This loop iterates the neighbour cells by X coordinate line
         for (int x = cellX - 1; x <= cellX + 1; x++) {
+            //This loop iterates the neighbour cells by Y coordinate line
             for (int y = cellY - 1; y <= cellY + 1; y++) {
+                //Checks if X and Y are in bounds and if X and Y are not same as cell's X and Y.
                 if ((x >= 0 && y >= 0 && x < grid.length && y < grid[0].length) &&
                         (x != cellX || y != cellY)) {
                     if (grid[x][y] == 1) {
