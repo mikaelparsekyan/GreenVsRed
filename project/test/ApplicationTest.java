@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import static org.junit.Assert.assertTrue;
 
 public class ApplicationTest {
+
     @Test
     public void assertIfInvalidGridSizeThrowsError() {
         //Assert true if invalid grid size is entered.
